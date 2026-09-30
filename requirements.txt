@@ -41,4 +41,6 @@ requests==2.34.2
 python-multipart==0.0.32
 
 # ── Production WSGI Server ────────────────────────────────────────────────────
+# Gunicorn: used by Render (Linux). Waitress kept as Windows local fallback.
+gunicorn==23.0.0
 waitress==3.0.2
