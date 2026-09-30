@@ -8,6 +8,7 @@
 ![FAISS](https://img.shields.io/badge/Vector_DB-FAISS-FF6F00)
 ![HuggingFace](https://img.shields.io/badge/LLM-HuggingFace_API-FFD21E?logo=huggingface&logoColor=black)
 ![License](https://img.shields.io/badge/License-MIT-green)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render-46E3B7?logo=render&logoColor=white)](https://multi-agent-research-system-z57k.onrender.com/)
 
 **A production-ready, modular AI research system where five specialized agents collaborate to deliver deep research, fact-checked reports, and downloadable PDFs — from a single query.**
 
@@ -24,6 +25,7 @@
 ### 📁 Repository & Code
 | Resource | Link |
 |---|---|
+| **🚀 Live Demo** | [multi-agent-research-system-z57k.onrender.com](https://multi-agent-research-system-z57k.onrender.com/) |
 | **GitHub Repository** | [github.com/bhardwajdevishika-sys/multi-agent-research-system](https://github.com/bhardwajdevishika-sys/multi-agent-research-system) |
 | **Source Code (main branch)** | [github.com/…/tree/main](https://github.com/bhardwajdevishika-sys/multi-agent-research-system/tree/main) |
 | **Clone URL (HTTPS)** | `https://github.com/bhardwajdevishika-sys/multi-agent-research-system.git` |
@@ -35,17 +37,16 @@
 | **HuggingFace Token** | LLM inference (required) | [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) |
 | **Tavily API Key** | Advanced web search (optional) | [app.tavily.com](https://app.tavily.com) |
 
-### 🌐 Local App (when running)
-| Page | URL |
-|---|---|
-| **Landing Page** | [http://localhost:5000](http://localhost:5000) |
-| **Research Dashboard** | [http://localhost:5000/dashboard](http://localhost:5000/dashboard) |
-| **Health Check** | [http://localhost:5000/health](http://localhost:5000/health) |
-| **API — Start Research** | `POST http://localhost:5000/api/research` |
-| **API — Live Status** | [http://localhost:5000/api/status](http://localhost:5000/api/status) |
-| **API — Get Result** | [http://localhost:5000/api/result](http://localhost:5000/api/result) |
-| **Download PDF Report** | [http://localhost:5000/api/report?format=pdf](http://localhost:5000/api/report?format=pdf) |
-| **Download DOCX Report** | [http://localhost:5000/api/report?format=docx](http://localhost:5000/api/report?format=docx) |
+### 🌐 App URLs
+| Page | Local | Live (Render) |
+|---|---|---|
+| **Landing Page** | [localhost:5000](http://localhost:5000) | [onrender.com](https://multi-agent-research-system-z57k.onrender.com/) |
+| **Research Dashboard** | [localhost:5000/dashboard](http://localhost:5000/dashboard) | [/dashboard](https://multi-agent-research-system-z57k.onrender.com/dashboard) |
+| **Health Check** | [localhost:5000/health](http://localhost:5000/health) | [/health](https://multi-agent-research-system-z57k.onrender.com/health) |
+| **API — Live Status** | [localhost:5000/api/status](http://localhost:5000/api/status) | [/api/status](https://multi-agent-research-system-z57k.onrender.com/api/status) |
+| **API — Get Result** | [localhost:5000/api/result](http://localhost:5000/api/result) | [/api/result](https://multi-agent-research-system-z57k.onrender.com/api/result) |
+| **Download PDF** | [localhost:5000/api/report?format=pdf](http://localhost:5000/api/report?format=pdf) | [/api/report?format=pdf](https://multi-agent-research-system-z57k.onrender.com/api/report?format=pdf) |
+| **Download DOCX** | [localhost:5000/api/report?format=docx](http://localhost:5000/api/report?format=docx) | [/api/report?format=docx](https://multi-agent-research-system-z57k.onrender.com/api/report?format=docx) |
 
 ### 📚 Docs & References
 | Resource | Link |
