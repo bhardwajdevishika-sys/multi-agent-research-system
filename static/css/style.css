@@ -1,0 +1,445 @@
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --bg-dark: #0f172a;
+    --card-bg-dark: #1e293b;
+    --text-dark: #ffffff;
+    --text-muted-dark: #e2e8f0;
+    --accent-color: #4cc9f0;
+    --success-soft: rgba(21, 128, 61, 0.2);
+    --success-text: #4ade80;
+    --primary-soft: rgba(67, 97, 238, 0.1);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+    transition: background-color 0.3s, color 0.3s;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+.text-muted {
+    color: #ffffff !important;
+    opacity: 0.8;
+}
+
+.lead {
+    color: var(--text-dark) !important;
+}
+
+body.dark-mode {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+/* Navbar */
+.navbar {
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-color) !important;
+}
+
+.nav-link {
+    color: var(--text-dark) !important;
+    opacity: 0.8;
+}
+
+.nav-link:hover, .nav-link.active {
+    opacity: 1;
+    color: var(--primary-color) !important;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 80vh;
+    padding: 80px 0;
+}
+
+/* Cards */
+.card {
+    border-radius: 16px;
+    background-color: var(--card-bg-dark);
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.agent-card {
+    transition: all 0.3s ease;
+}
+
+.agent-card:hover {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.agent-card:hover .text-muted,
+.agent-card:hover .agent-icon i {
+    color: white !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 10px;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Forms */
+.form-control, .form-select {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 15px;
+    color: white !important;
+}
+
+.form-select option {
+    background-color: var(--card-bg-dark);
+    color: white;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+}
+
+.bg-light-soft {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.bg-dark-soft {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Animations */
+.animate-up {
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+}
+
+.animate-fade-in {
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 25px;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -30px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #334155;
+    border: 3px solid var(--card-bg-dark);
+    z-index: 1;
+}
+
+.timeline-item.active .timeline-dot {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2);
+}
+
+/* Custom Column for 5 agents */
+@media (min-width: 992px) {
+    .col-lg-2-4 {
+        flex: 0 0 auto;
+        width: 20%;
+    }
+}
+
+/* Status Dot */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.bg-success-soft {
+    background-color: var(--success-soft);
+}
+
+.bg-primary-soft {
+    background-color: var(--primary-soft);
+}
+
+.text-success {
+    color: var(--success-text) !important;
+}
+
+/* Custom Layout Utilities */
+.sidebar-sticky {
+    top: 100px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+.progress-custom {
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.report-preview {
+    min-height: 200px;
+}
+
+.hero-glow {
+    width: 300px;
+    height: 300px;
+    filter: blur(80px);
+}
+
+.hero-img-refine {
+    filter: brightness(0.9) contrast(1.1);
+}
+
+/* Dynamic Progress Classes to avoid inline CSS linter errors */
+.w-step-0 { width: 0%; }
+.w-step-10 { width: 10%; }
+.w-step-30 { width: 30%; }
+.w-step-60 { width: 60%; }
+.w-step-90 { width: 90%; }
+.w-step-100 { width: 100%; }
+
+/* ─── Additional styles for settings, history, toasts ─────────────────────── */
+
+.bg-card-dark {
+    background-color: var(--card-bg-dark) !important;
+}
+
+/* History offcanvas items */
+.history-item {
+    background-color: rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.history-item:hover {
+    background-color: rgba(67, 97, 238, 0.15);
+}
+
+/* Toast */
+.toast {
+    background-color: var(--card-bg-dark);
+    border: 1px solid var(--border-color);
+}
+
+/* Offcanvas */
+.offcanvas {
+    background-color: var(--card-bg-dark);
+}
+
+/* Modal backdrop fix for dark theme */
+.modal-content {
+    background-color: var(--card-bg-dark);
+}
+
+/* Progress bar fill color */
+#progressBar {
+    background-color: var(--primary-color);
+    transition: width 0.5s ease;
+}
+
+/* Results section smooth show */
+#resultsSection {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Confidence badge */
+#confidenceScore {
+    font-size: 0.85rem;
+    padding: 4px 10px;
+}
+
+/* Cursor helpers */
+.cursor-pointer { cursor: pointer; }
+
+/* Dynamic w-step-* removed — now driven by JS inline style */
+
+/* Confidence badge colour variants */
+.bg-warning-soft { background-color: rgba(234, 179, 8, 0.15) !important; }
+.text-warning     { color: #facc15 !important; }
+.bg-danger-soft   { background-color: rgba(239, 68, 68, 0.15) !important; }
+.text-danger      { color: #f87171 !important; }
+
+/* Report preview section blocks */
+#reportPreview .text-uppercase { letter-spacing: 0.05em; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIVE AGENT FEEDBACK — added in refactor
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Agent card state variants ────────────────────────────────────────────── */
+
+/* Active: glowing primary border + subtle background lift */
+.agent-card--active {
+    border-color: var(--primary-color) !important;
+    background-color: rgba(67, 97, 238, 0.12) !important;
+    box-shadow: 0 0 0 1px var(--primary-color), 0 4px 20px rgba(67, 97, 238, 0.25) !important;
+    transform: translateY(-2px);
+}
+
+/* Done: subtle green border */
+.agent-card--done {
+    border-color: rgba(74, 222, 128, 0.35) !important;
+    background-color: rgba(21, 128, 61, 0.07) !important;
+}
+
+/* ── Pulse dot animation (active agent indicator) ─────────────────────────── */
+@keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 0   rgba(251, 191, 36, 0.6); }
+    70%  { box-shadow: 0 0 0 6px rgba(251, 191, 36, 0);   }
+    100% { box-shadow: 0 0 0 0   rgba(251, 191, 36, 0);   }
+}
+
+.pulse-dot {
+    animation: pulse-ring 1.4s ease-out infinite;
+}
+
+/* ── Icon pulse (active agent icon wrapper) ───────────────────────────────── */
+@keyframes icon-glow {
+    0%, 100% { filter: drop-shadow(0 0 0px rgba(67, 97, 238, 0)); }
+    50%       { filter: drop-shadow(0 0 8px rgba(67, 97, 238, 0.8)); }
+}
+
+.icon-pulse i {
+    animation: icon-glow 1.6s ease-in-out infinite;
+}
+
+/* ── Live Activity Log ────────────────────────────────────────────────────── */
+.activity-log {
+    max-height: 240px;
+    overflow-y: auto;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+/* Smooth entry for new log lines */
+.log-entry {
+    animation: fadeInDown 0.25s ease forwards;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Custom scrollbar inside log */
+.activity-log::-webkit-scrollbar       { width: 6px; }
+.activity-log::-webkit-scrollbar-track { background: transparent; }
+.activity-log::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+
+/* ── Timeline subtitle live update ───────────────────────────────────────── */
+.timeline-subtitle {
+    transition: opacity 0.3s ease;
+}
+
+.timeline-item.active .timeline-subtitle {
+    opacity: 1 !important;
+    color: var(--accent-color) !important;
+}
+
+/* ── Secondary soft badge (idle state) ───────────────────────────────────── */
+.bg-secondary-soft { background-color: rgba(148, 163, 184, 0.15) !important; }
+.text-secondary    { color: #94a3b8 !important; }
+
+/* ── opacity-40 / opacity-60 utilities ───────────────────────────────────── */
+.opacity-40 { opacity: 0.40 !important; }
+.opacity-60 { opacity: 0.60 !important; }

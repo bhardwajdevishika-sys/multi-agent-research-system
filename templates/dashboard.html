@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - AI Multi-Research Agent{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+
+        <!-- ═══ Sidebar ═════════════════════════════════════════════════════ -->
+        <div class="col-lg-2 mb-4 mb-lg-0">
+            <div class="sticky-top sidebar-sticky bg-card-dark p-3 rounded-4 border border-secondary shadow-sm">
+                <h6 class="text-uppercase text-white fw-bold mb-4 small">Main Menu</h6>
+                <nav class="nav flex-column gap-2">
+                    <a class="nav-link active rounded p-2 text-white" href="{{ url_for('dashboard') }}">
+                        <i class="fas fa-plus-circle me-2"></i>New Research
+                    </a>
+                    <a class="nav-link rounded p-2 text-white" href="#"
+                       data-bs-toggle="offcanvas" data-bs-target="#historyOffcanvas">
+                        <i class="fas fa-history me-2"></i>History
+                    </a>
+                    <a class="nav-link rounded p-2 text-white" href="#"
+                       data-bs-toggle="modal" data-bs-target="#settingsModal">
+                        <i class="fas fa-cog me-2"></i>Settings
+                    </a>
+                    <a class="nav-link rounded p-2 text-danger" href="{{ url_for('reset_research') }}">
+                        <i class="fas fa-undo me-2"></i>Reset System
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- ═══ Main Content ════════════════════════════════════════════════ -->
+        <div class="col-lg-10">
+
+            <!-- Header -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+                <h2 class="fw-bold m-0 text-white">Research Dashboard</h2>
+                <span id="statusBadge"
+                      class="badge px-3 py-2 align-self-start align-self-md-center bg-secondary-soft text-secondary">
+                    Idle
+                </span>
+            </div>
+
+            <!-- ── Research Form ────────────────────────────────────────── -->
+            <div class="card mb-4 border-0 shadow-lg overflow-hidden">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4 text-white">Start New Research</h5>
+                    <form id="researchForm" class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label text-white" for="topicInput">Research Topic</label>
+                            <input id="topicInput" type="text" name="topic"
+                                   class="form-control form-control-lg border-secondary"
+                                   placeholder="e.g. Emotion detection using NLP and deep learning…"
+                                   value="{{ topic }}" autocomplete="off">
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <label class="form-label text-white" for="modelSelect">AI Model</label>
+                            <select id="modelSelect" class="form-select border-secondary research-select">
+                                <option value="mixtral" selected>Mixtral-8x7B (Primary)</option>
+                                <option value="llama3">Meta Llama-3-8B (Fallback 1)</option>
+                                <option value="gemma2">Google Gemma-2-9B (Fallback 2)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <label class="form-label text-white" for="depthSelect">Research Depth</label>
+                            <select id="depthSelect" class="form-select border-secondary research-select">
+                                <option value="advanced" selected>Advanced</option>
+                                <option value="basic">Basic</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <label class="form-label text-white" for="typeSelect">Research Type</label>
+                            <select id="typeSelect" class="form-select border-secondary research-select">
+                                <option value="academic">Academic Research</option>
+                                <option value="technical">Technical Research</option>
+                                <option value="market">Market Research</option>
+                                <option value="cybersecurity">Cybersecurity Research</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button id="startBtn" type="submit"
+                                    class="btn btn-primary btn-lg w-100 py-3 shadow-sm">
+                                <i class="fas fa-search me-2"></i>Start Research
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ── Agent Status Cards ───────────────────────────────────── -->
+            <h5 class="fw-bold mb-3 text-white">
+                <i class="fas fa-robot me-2 text-primary"></i>Agent Status
+            </h5>
+            {#
+                Each card exposes three JS-targetted elements:
+                  .status-dot        — colour indicator dot
+                  .agent-status-text — Idle / Working / Complete
+                  .agent-task-text   — live backend status message
+                  .agent-icon        — icon wrapper (pulse animation target)
+            #}
+            {% set agent_list = [
+                ('agent-coordinator', 'fa-users-cog',  'Coordinator Agent',   'Orchestrates the workflow'),
+                ('agent-researcher',  'fa-search',     'Research Agent',      'Web search & data gathering'),
+                ('agent-retriever',   'fa-database',   'Retriever Agent',     'Semantic RAG retrieval'),
+                ('agent-summarizer',  'fa-brain',      'Summarizer Agent',    'Synthesis & insights'),
+                ('agent-verifier',    'fa-shield-alt', 'Verification Agent',  'Fact-checking findings'),
+                ('agent-citation',    'fa-quote-right','Citation Agent',      'APA reference generation'),
+                ('agent-reporter',    'fa-file-alt',   'Reporter Agent',      'Generates final report'),
+            ] %}
+            <div class="row row-cols-2 row-cols-sm-3 row-cols-xl-7 g-3 mb-4">
+                {% for aid, icon, name, task in agent_list %}
+                <div class="col">
+                    <div id="{{ aid }}" class="card agent-card h-100 border-secondary">
+                        <div class="card-body text-center p-3">
+                            <div class="agent-icon mb-2 mx-auto">
+                                <i class="fas {{ icon }} fa-2x text-primary"></i>
+                            </div>
+                            <h6 class="fw-bold mb-1 text-white" style="font-size:.75rem">{{ name }}</h6>
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <span class="status-dot bg-secondary me-2"></span>
+                                <small class="agent-status-text text-white opacity-50">Idle</small>
+                            </div>
+                            <small class="agent-task-text text-truncate d-block text-white opacity-50"
+                                   title="{{ task }}">{{ task }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- ── Progress + Timeline ──────────────────────────────────── -->
+            <div class="card mb-4 border-secondary">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold m-0 text-white">Research Progress</h5>
+                        <span id="progressLabel" class="fw-bold text-primary">0%</span>
+                    </div>
+                    <div class="progress mb-4 progress-custom rounded-pill">
+                        <div id="progressBar"
+                             class="progress-bar progress-bar-striped progress-bar-animated"
+                             role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                             style="width:0%"></div>
+                    </div>
+
+                    <!-- Timeline — subtitles updated live by JS -->
+                    <div class="timeline">
+                        <div id="tl-init" class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <p class="mb-0 fw-bold text-white">Initialization</p>
+                                <small class="timeline-subtitle text-white opacity-60">Setting up environment</small>
+                            </div>
+                        </div>
+                        <div id="tl-gather" class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <p class="mb-0 fw-bold text-white">Data Gathering</p>
+                                <small class="timeline-subtitle text-white opacity-60">Collecting sources via Tavily + DDG</small>
+                            </div>
+                        </div>
+                        <div id="tl-analyze" class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <p class="mb-0 fw-bold text-white">Analysis &amp; Synthesis</p>
+                                <small class="timeline-subtitle text-white opacity-60">LLM summarization &amp; verification</small>
+                            </div>
+                        </div>
+                        <div id="tl-report" class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <p class="mb-0 fw-bold text-white">Report Generation</p>
+                                <small class="timeline-subtitle text-white opacity-60">Finalizing document</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Live Activity Log ─────────────────────────────────────── -->
+            <div class="card mb-4 border-secondary">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold m-0 text-white">
+                            <i class="fas fa-terminal me-2 text-primary"></i>Live Activity Log
+                        </h5>
+                        <button class="btn btn-sm btn-outline-secondary text-white border-secondary"
+                                onclick="resetActivityLog()" title="Clear log">
+                            <i class="fas fa-trash-alt me-1"></i>Clear
+                        </button>
+                    </div>
+                    <div id="activityLog"
+                         class="activity-log rounded p-2 bg-dark-soft border border-secondary"
+                         aria-live="polite" aria-label="Live agent activity log">
+                        <p class="text-white opacity-40 small m-0 ps-1">
+                            Activity will appear here once research starts…
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Results (hidden until complete) ───────────────────────── -->
+            <div id="resultsSection" class="d-none">
+                <div class="row g-4 animate-up">
+                    <div class="col-xl-8">
+                        <!-- Key Insights -->
+                        <div class="card mb-4 border-secondary">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold mb-4 text-white">
+                                    <i class="fas fa-lightbulb me-2 text-primary"></i>Key Insights
+                                </h5>
+                                <ul id="insightList" class="list-group list-group-flush bg-transparent"></ul>
+                            </div>
+                        </div>
+                        <!-- Report Preview -->
+                        <div class="card mb-4 border-secondary">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold mb-4 text-white">
+                                    <i class="fas fa-file-contract me-2 text-primary"></i>Final Report Preview
+                                </h5>
+                                <div id="reportPreview"
+                                     class="p-3 bg-dark-soft rounded border border-secondary report-preview text-white small"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <!-- AI Summary -->
+                        <div class="card mb-4 border-secondary">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold mb-3 text-white">
+                                    <i class="fas fa-robot me-2 text-primary"></i>AI Summary
+                                </h5>
+                                <p id="aiSummary" class="text-white opacity-75 small mb-2"></p>
+                                <div class="d-flex align-items-center gap-2">
+                                    <small class="text-white opacity-50">Confidence:</small>
+                                    <span id="confidenceScore" class="badge bg-success-soft text-success">–</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sources -->
+                        <div class="card mb-4 border-secondary">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold mb-3 text-white">
+                                    <i class="fas fa-database me-2 text-primary"></i>Sources
+                                </h5>
+                                <ul id="sourcesList" class="list-unstyled mb-0"></ul>
+                            </div>
+                        </div>
+                        <!-- Downloads -->
+                        <div class="d-grid gap-2 mb-4">
+                            <button id="downloadPdf" class="btn btn-outline-primary shadow-sm">
+                                <i class="fas fa-file-pdf me-2"></i>Download PDF
+                            </button>
+                            <button id="downloadDocx" class="btn btn-outline-primary shadow-sm">
+                                <i class="fas fa-file-word me-2"></i>Download DOCX
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /col-lg-10 -->
+    </div><!-- /row -->
+</div><!-- /container-fluid -->
+
+
+<!-- ═══ Settings Modal ══════════════════════════════════════════════════════ -->
+<div class="modal fade" id="settingsModal" tabindex="-1"
+     aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-card-dark border border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title text-white fw-bold" id="settingsModalLabel">
+                    <i class="fas fa-cog me-2 text-primary"></i>Settings
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <h6 class="text-white fw-semibold mb-3">Model Configuration</h6>
+                    <label class="form-label text-white small" for="settingsModel">Primary LLM Model</label>
+                    <select id="settingsModel" class="form-select border-secondary mb-3">
+                        <option value="mixtral">Mixtral-8x7B-Instruct (Recommended)</option>
+                        <option value="llama3">Meta Llama-3-8B-Instruct</option>
+                        <option value="gemma2">Google Gemma-2-9B-IT</option>
+                    </select>
+                    <div class="alert alert-info bg-primary-soft border-0 text-white small p-2">
+                        <i class="fas fa-info-circle me-1"></i>
+                        The system automatically falls back through all 3 models if one is unavailable.
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h6 class="text-white fw-semibold mb-3">Search Configuration</h6>
+                    <label class="form-label text-white small" for="settingsMaxResults">Max Search Results</label>
+                    <select id="settingsMaxResults" class="form-select border-secondary mb-3">
+                        <option value="3">3 results (faster)</option>
+                        <option value="5" selected>5 results (balanced)</option>
+                        <option value="10">10 results (thorough)</option>
+                    </select>
+                    <label class="form-label text-white small" for="settingsDepth">Research Depth</label>
+                    <select id="settingsDepth" class="form-select border-secondary">
+                        <option value="basic">Basic</option>
+                        <option value="advanced" selected>Advanced (recommended)</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <h6 class="text-white fw-semibold mb-3">API Status</h6>
+                    <div class="d-flex flex-column gap-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-white">HuggingFace Token</small>
+                            <span class="badge bg-success-soft text-success">
+                                <i class="fas fa-check-circle me-1"></i>Connected
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-white">Tavily Search</small>
+                            <span class="badge bg-success-soft text-success">
+                                <i class="fas fa-check-circle me-1"></i>Connected
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-white">Primary Model</small>
+                            <span class="badge bg-primary-soft text-primary">Mixtral-8x7B</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="saveSettingsBtn" type="button" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Save Settings
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ═══ History Offcanvas ════════════════════════════════════════════════════ -->
+<div class="offcanvas offcanvas-start bg-card-dark border-secondary" tabindex="-1"
+     id="historyOffcanvas" aria-labelledby="historyOffcanvasLabel">
+    <div class="offcanvas-header border-secondary">
+        <h5 class="offcanvas-title text-white fw-bold" id="historyOffcanvasLabel">
+            <i class="fas fa-history me-2 text-primary"></i>Research History
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <p class="text-white opacity-50 small mb-3">Click any topic to load it into the form.</p>
+        <div id="historyList"></div>
+        <button id="clearHistoryBtn" class="btn btn-sm btn-outline-danger w-100 mt-3">
+            <i class="fas fa-trash me-2"></i>Clear History
+        </button>
+    </div>
+</div>
+
+
+<!-- ═══ Toast Container ══════════════════════════════════════════════════════ -->
+<div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"
+     style="z-index:1100" aria-live="polite" aria-atomic="true"></div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

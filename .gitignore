@@ -1,0 +1,73 @@
+# ─── Environment & Secrets ────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+*.pyo
+
+# ─── Virtual Environments ─────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+.env_dir/
+ENV/
+env.bak/
+venv.bak/
+
+# ─── Runtime Logs ─────────────────────────────────────────────────────────────
+backend/logs/
+*.log
+
+# ─── Vector Store / Memory / Cache ────────────────────────────────────────────
+backend/memory/
+# Keep the directory structure but ignore runtime content
+!backend/memory/.gitkeep
+!backend/memory/research_memory/.gitkeep
+!backend/memory/cache/.gitkeep
+!backend/memory/uploads/.gitkeep
+
+# ─── Uploaded & Generated Files ───────────────────────────────────────────────
+backend/memory/uploads/
+backend/memory/research_memory/
+backend/memory/cache/
+*.pdf
+*.docx
+
+# ─── Jupyter Notebooks ────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ─── IDE / Editor ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Build / Distribution ─────────────────────────────────────────────────────
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+
+# ─── Testing ──────────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ─── Type-checking ────────────────────────────────────────────────────────────
+.mypy_cache/
+.ruff_cache/
