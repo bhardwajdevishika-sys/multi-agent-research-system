@@ -108,5 +108,18 @@ def create_app():
 if __name__ == "__main__":
     app = create_app()
     port = int(os.environ.get("PORT", 5000))
-    logger.info(f"Starting Merged Multi Research Agent App on port {port}")
-    app.run(host='0.0.0.0', port=port, debug=True)
+
+    # Use Waitress (production WSGI) when FLASK_ENV != development
+    # Falls back to Flask dev server locally for convenience
+    if os.environ.get("FLASK_ENV") == "development":
+        logger.info(f"Starting Flask dev server on port {port}")
+        app.run(host="0.0.0.0", port=port, debug=True)
+    else:
+        try:
+            from waitress import serve
+            logger.info(f"Starting Waitress production server on port {port}")
+            serve(app, host="0.0.0.0", port=port, threads=4)
+        except ImportError:
+            # Fallback: waitress not installed (local dev without it)
+            logger.warning("Waitress not found — falling back to Flask dev server")
+            app.run(host="0.0.0.0", port=port, debug=False)

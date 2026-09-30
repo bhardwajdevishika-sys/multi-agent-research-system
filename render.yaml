@@ -1,0 +1,58 @@
+services:
+  - type: web
+    name: multi-agent-research-system
+    runtime: python
+    region: oregon          # free tier region
+    plan: free
+
+    # Render runs this to install dependencies
+    buildCommand: pip install -r requirements.txt
+
+    # Render runs this to start the server
+    # Waitress is called directly so Render's PORT env var is picked up
+    startCommand: python app.py
+
+    # Health-check endpoint — Render pings this to confirm the app is up
+    healthCheckPath: /health
+
+    # Environment variables — values are set in the Render dashboard
+    # (never put real secrets here)
+    envVars:
+      - key: FLASK_ENV
+        value: production
+
+      - key: SECRET_KEY
+        generateValue: true       # Render auto-generates a secure random value
+
+      - key: HUGGINGFACE_TOKEN
+        sync: false               # you enter this manually in Render dashboard
+
+      - key: TAVILY_API_KEY
+        sync: false               # you enter this manually in Render dashboard
+
+      - key: LLM_MODEL_ID
+        value: mistralai/Mixtral-8x7B-Instruct-v0.1
+
+      - key: LLM_MODEL_FALLBACK_1
+        value: meta-llama/Meta-Llama-3-8B-Instruct
+
+      - key: LLM_MODEL_FALLBACK_2
+        value: google/gemma-2-9b-it
+
+      - key: EMBEDDING_MODEL_ID
+        value: sentence-transformers/all-MiniLM-L6-v2
+
+      - key: DEVICE
+        value: cpu
+
+      - key: CHUNK_SIZE
+        value: "1000"
+
+      - key: CHUNK_OVERLAP
+        value: "200"
+
+      - key: MAX_SEARCH_RESULTS
+        value: "5"
+
+      - key: VECTOR_DB_PATH
+        value: backend/memory/research_memory/faiss_index

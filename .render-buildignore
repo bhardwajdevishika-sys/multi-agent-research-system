@@ -1,0 +1,6 @@
+venv/
+.venv/
+backend/memory/
+backend/logs/
+*.pdf
+*.docx
