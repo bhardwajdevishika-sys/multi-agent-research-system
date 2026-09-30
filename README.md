@@ -17,6 +17,48 @@
 
 ---
 
+## 🔗 Quick Links
+
+> All links you need — bookmarked in one place.
+
+### 📁 Repository & Code
+| Resource | Link |
+|---|---|
+| **GitHub Repository** | [github.com/bhardwajdevishika-sys/multi-agent-research-system](https://github.com/bhardwajdevishika-sys/multi-agent-research-system) |
+| **Source Code (main branch)** | [github.com/…/tree/main](https://github.com/bhardwajdevishika-sys/multi-agent-research-system/tree/main) |
+| **Clone URL (HTTPS)** | `https://github.com/bhardwajdevishika-sys/multi-agent-research-system.git` |
+| **Download ZIP** | [github.com/…/archive/main.zip](https://github.com/bhardwajdevishika-sys/multi-agent-research-system/archive/refs/heads/main.zip) |
+
+### 🔑 API Keys (get / manage)
+| Service | Purpose | Link |
+|---|---|---|
+| **HuggingFace Token** | LLM inference (required) | [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) |
+| **Tavily API Key** | Advanced web search (optional) | [app.tavily.com](https://app.tavily.com) |
+
+### 🌐 Local App (when running)
+| Page | URL |
+|---|---|
+| **Landing Page** | [http://localhost:5000](http://localhost:5000) |
+| **Research Dashboard** | [http://localhost:5000/dashboard](http://localhost:5000/dashboard) |
+| **Health Check** | [http://localhost:5000/health](http://localhost:5000/health) |
+| **API — Start Research** | `POST http://localhost:5000/api/research` |
+| **API — Live Status** | [http://localhost:5000/api/status](http://localhost:5000/api/status) |
+| **API — Get Result** | [http://localhost:5000/api/result](http://localhost:5000/api/result) |
+| **Download PDF Report** | [http://localhost:5000/api/report?format=pdf](http://localhost:5000/api/report?format=pdf) |
+| **Download DOCX Report** | [http://localhost:5000/api/report?format=docx](http://localhost:5000/api/report?format=docx) |
+
+### 📚 Docs & References
+| Resource | Link |
+|---|---|
+| **Flask Docs** | [flask.palletsprojects.com](https://flask.palletsprojects.com) |
+| **LangChain Docs** | [python.langchain.com](https://python.langchain.com) |
+| **HuggingFace Inference API** | [huggingface.co/docs/api-inference](https://huggingface.co/docs/api-inference/index) |
+| **FAISS Docs** | [faiss.ai](https://faiss.ai) |
+| **Tavily Docs** | [docs.tavily.com](https://docs.tavily.com) |
+| **sentence-transformers Docs** | [sbert.net](https://www.sbert.net) |
+
+---
+
 ## 🧠 What It Does
 
 Paste a research topic. Within minutes you get a fully structured academic report — complete with an abstract, key findings, methodology analysis, citations, and a downloadable PDF or DOCX.
@@ -161,6 +203,20 @@ multi-research-agent/
     ├── css/style.css               # Dark-mode design system
     └── js/main.js                  # Status polling, results rendering, history
 ```
+
+---
+
+## ⚡ Quick Start (returning users)
+
+Already set up? Just run these two commands:
+
+```powershell
+# Windows PowerShell
+cd "C:\Users\Devishika\Downloads\Multi_Research_Agent-main\Multi_Research_Agent-main"
+.\venv\Scripts\python.exe app.py
+```
+
+Then open **[http://localhost:5000/dashboard](http://localhost:5000/dashboard)** in your browser.
 
 ---
 
