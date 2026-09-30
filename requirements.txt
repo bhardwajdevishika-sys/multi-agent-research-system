@@ -12,13 +12,15 @@ langchain-core==1.6.6
 langchain-text-splitters==1.1.2
 langgraph==1.2.12
 
-# ── HuggingFace (remote Inference API — no local model download for LLM) ─────
+# ── HuggingFace Inference API (remote — LLM + embeddings, no local model) ────
 huggingface_hub==1.33.0
 
-# ── Embedding model (local, ~90 MB first run) ─────────────────────────────────
-torch==2.14.0
-transformers==5.17.0
-sentence-transformers==6.1.0
+# ── NOTE: torch, transformers, sentence-transformers intentionally excluded ───
+# These packages consume ~800MB RAM, exceeding the free-tier 512MB limit.
+# Embeddings are served via the HuggingFace Inference API (remote) instead.
+# To enable local embeddings for development, install manually:
+#   pip install torch==2.14.0 transformers==5.17.0 sentence-transformers==6.1.0
+# and set ALLOW_LOCAL_EMBEDDING=true in your .env file.
 
 # ── Vector Store ──────────────────────────────────────────────────────────────
 faiss-cpu==1.15.1
@@ -41,6 +43,5 @@ requests==2.34.2
 python-multipart==0.0.32
 
 # ── Production WSGI Server ────────────────────────────────────────────────────
-# Gunicorn: used by Render (Linux). Waitress kept as Windows local fallback.
 gunicorn==23.0.0
 waitress==3.0.2
