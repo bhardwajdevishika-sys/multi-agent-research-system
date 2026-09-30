@@ -10,7 +10,7 @@ services:
 
     # Render runs this to start the server
     # Gunicorn is the standard production WSGI server on Linux (Render)
-    startCommand: gunicorn "app:create_app()" --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
 
     # Health-check endpoint — Render pings this to confirm the app is up
     healthCheckPath: /health
